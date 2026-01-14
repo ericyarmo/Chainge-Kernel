@@ -22,6 +22,10 @@ async-trait.workspace = true
 # Error handling
 thiserror.workspace = true
 
+# Crypto
+blake3.workspace = true
+rand.workspace = true
+
 # Utilities
 tracing.workspace = true
 bytes.workspace = true
