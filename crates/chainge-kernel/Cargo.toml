@@ -1,0 +1,30 @@
+[package]
+name = "chainge-kernel"
+description = "Unified Chainge Kernel API: verifiable memory with receipts, streams, and permissions"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+chainge-kernel-core.workspace = true
+chainge-kernel-store.workspace = true
+chainge-kernel-sync.workspace = true
+chainge-kernel-perms.workspace = true
+
+# Async
+tokio.workspace = true
+async-trait.workspace = true
+
+# Error handling
+thiserror.workspace = true
+anyhow.workspace = true
+
+# Utilities
+tracing.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+proptest.workspace = true
+tracing-subscriber.workspace = true

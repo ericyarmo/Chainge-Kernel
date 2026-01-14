@@ -1,0 +1,31 @@
+[package]
+name = "chainge-kernel-sync"
+description = "Sync protocol and convergence for the Chainge Kernel"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+chainge-kernel-core.workspace = true
+chainge-kernel-store.workspace = true
+
+# Serialization
+ciborium.workspace = true
+serde.workspace = true
+
+# Async
+tokio.workspace = true
+async-trait.workspace = true
+
+# Error handling
+thiserror.workspace = true
+
+# Utilities
+tracing.workspace = true
+bytes.workspace = true
+
+[dev-dependencies]
+proptest.workspace = true
+tempfile.workspace = true

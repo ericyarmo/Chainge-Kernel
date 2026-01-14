@@ -1,0 +1,29 @@
+[package]
+name = "chainge-kernel-core"
+description = "Core primitives for the Chainge Kernel: receipts, streams, canonicalization"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+# Cryptography
+blake3.workspace = true
+ed25519-dalek.workspace = true
+
+# Serialization
+ciborium.workspace = true
+serde.workspace = true
+
+# Error handling
+thiserror.workspace = true
+
+# Utilities
+bytes.workspace = true
+hex.workspace = true
+
+[dev-dependencies]
+proptest.workspace = true
+serde_json.workspace = true
+rand.workspace = true

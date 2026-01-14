@@ -1,0 +1,31 @@
+[package]
+name = "chainge-kernel-store"
+description = "Storage abstraction and SQLite implementation for the Chainge Kernel"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+chainge-kernel-core.workspace = true
+
+# Storage
+rusqlite.workspace = true
+
+# Async
+tokio.workspace = true
+async-trait.workspace = true
+
+# Serialization
+serde.workspace = true
+
+# Error handling
+thiserror.workspace = true
+
+# Utilities
+tracing.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true
+proptest.workspace = true
