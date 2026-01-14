@@ -99,6 +99,23 @@ pub struct Ed25519PublicKey([u8; 32]);
 pub struct Ed25519Signature([u8; 64]);
 ```
 
+### 1.5 Canonical Receipt Bytes
+
+The canonical bytes of a receipt are a **simple concatenation**, NOT a CBOR-encoded struct:
+
+```
+canonical_bytes(receipt) = canonical_header_cbor || payload_bytes || signature_bytes
+                         = [CBOR map, variable] || [raw bytes, variable] || [64 bytes, fixed]
+```
+
+**Critical**: The Receipt as a whole is NOT wrapped in a CBOR container. Only the header is CBOR-encoded.
+The payload and signature are raw bytes concatenated after the header.
+
+This design choice:
+- Allows streaming: parse header, then read N payload bytes, then 64 signature bytes
+- Avoids double-encoding: payload is not CBOR-in-CBOR
+- Simplifies verification: signature covers exactly `header_cbor || payload`
+
 ---
 
 ## 2. Canonicalization Spec v0
@@ -106,6 +123,9 @@ pub struct Ed25519Signature([u8; 64]);
 Deterministic encoding is the foundation. Two implementations given the same Receipt MUST produce byte-identical output.
 
 ### 2.1 Encoding Format: Canonical CBOR (RFC 8949 Core Deterministic)
+
+**IMPORTANT**: The Receipt as a whole is NOT CBOR-encoded. Only the header is encoded as CBOR.
+The canonical receipt bytes are: `header_cbor || raw_payload || raw_signature` (see §1.5).
 
 We use CBOR with the following restrictions:
 
@@ -303,6 +323,37 @@ A stream is uniquely identified by `(author, stream_name)` → `StreamId`.
 - **Monotonically increasing**: No gaps in a valid stream from author's perspective
 - **Immutable mapping**: Once a receipt claims `(stream_id, seq)`, no other receipt may claim that position
 - **Hash chain**: Each receipt (seq > 1) MUST include `prev_receipt_id` pointing to the receipt at seq-1
+
+#### 3.2.1 Single-Writer Invariant
+
+A stream has a single owner (the author). Only the author MAY append receipts to their stream:
+
+```
+receipt.header.author MUST == stream.author
+```
+
+**Exception**: Delegated write access via a Grant receipt (see §6). If principal P has been granted
+`WriteStream { stream_id }` by the stream owner, P may create receipts in that stream. In this case:
+- The receipt's `author` is still the delegate (P)
+- The receipt MUST reference the grant in `refs`
+- Validation checks the grant is valid at the receipt's position
+
+For v0, delegation is OUT OF SCOPE. Only the stream owner may write.
+
+#### 3.2.2 Prev Pointer Validation
+
+When validating a receipt with `seq > 1`:
+
+1. If we have the receipt at `seq - 1`:
+   - `prev_receipt_id` MUST equal that receipt's ID
+   - Mismatch indicates fork or corruption
+
+2. If we do NOT have `seq - 1`:
+   - Accept the receipt provisionally
+   - Mark `seq - 1` as a gap
+   - When gap is filled, retroactively validate the chain
+
+This allows out-of-order receipt delivery while maintaining eventual consistency.
 
 ### 3.3 Stream State
 
@@ -537,6 +588,24 @@ enum SeqRange {
 }
 ```
 
+#### 5.2.1 Message Size Limits
+
+To prevent memory exhaustion and enable fair bandwidth sharing:
+
+| Field | Limit | Rationale |
+|-------|-------|-----------|
+| `streams_of_interest` | max 100 | Prevent huge Hello messages |
+| `heads` in StreamHeads | max 1000 | One message per sync round |
+| `requests` in NeedReceipts | max 100 | Bounded request batching |
+| `seqs` in SeqRange::List | max 100 | Bounded gap lists |
+| `receipts` in Receipts | max 50 | ~1MB assuming 20KB avg receipt |
+| `received` in Ack | max 100 | Bounded ack batching |
+
+If a node needs more than these limits, it MUST chunk across multiple messages.
+
+**Payload size limit**: Individual receipt payload SHOULD be ≤ 64KB. Larger payloads
+should use chunked receipts (application-level, out of scope for v0).
+
 ### 5.3 Sync Algorithm (Anti-Entropy)
 
 ```
@@ -604,8 +673,9 @@ Permissions are receipts. Access control is computed by replaying permission eve
 struct GrantPayload {
     recipient: Ed25519PublicKey,      // Who is granted access
     scope: PermissionScope,           // What access is granted
-    conditions: Option<Conditions>,    // Optional constraints
-    encrypted_key: Option<Bytes>,      // Encrypted key material (for read access)
+    conditions: Option<Conditions>,   // Optional constraints
+    // NOTE: Key material is shared via separate KeyShare receipts, NOT embedded here.
+    // This separation allows key rotation without re-granting permissions.
 }
 
 // Revoke permission
