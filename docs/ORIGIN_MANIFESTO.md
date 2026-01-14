@@ -1,6 +1,6 @@
 # A Chainge Agent: The Original Manifesto
 
-**Written**: December 2025 (3 days, 82 pages)
+**Written**: July 2025 (3 days, 82 pages)
 **Author**: Eric Yarmo
 **Context**: This was written days before discovering the "portable, permissioned, verifiable memory" framing. It's the philosophical foundation that became the technical kernel.
 
