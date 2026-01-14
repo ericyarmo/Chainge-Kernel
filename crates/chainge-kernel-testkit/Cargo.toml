@@ -33,6 +33,7 @@ criterion.workspace = true
 tempfile.workspace = true
 tokio = { workspace = true, features = ["rt-multi-thread", "macros"] }
 
-[[bench]]
-name = "canonical"
-harness = false
+# Benchmarks disabled until implemented
+# [[bench]]
+# name = "canonical"
+# harness = false

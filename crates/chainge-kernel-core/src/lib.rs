@@ -25,9 +25,9 @@ pub mod types;
 pub mod validation;
 
 pub use canonical::{canonical_bytes, canonical_header_bytes};
-pub use crypto::{Blake3Hash, Ed25519PublicKey, Ed25519Signature};
+pub use crypto::{Blake3Hash, Ed25519PublicKey, Ed25519Signature, Keypair};
 pub use error::{CoreError, ValidationError};
-pub use receipt::{Receipt, ReceiptHeader, ReceiptKind};
+pub use receipt::{Receipt, ReceiptBuilder, ReceiptHeader, ReceiptKind};
 pub use stream::{StreamHealth, StreamId, StreamState};
 pub use types::ReceiptId;
 pub use validation::{validate_receipt, validate_receipt_structure};

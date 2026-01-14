@@ -295,7 +295,14 @@ fn cbor_value_to_header(value: &Value) -> Result<ReceiptHeader, CoreError> {
     // Helper to get a value by integer key
     let get = |key: u64| -> Option<&Value> {
         map.iter()
-            .find(|(k, _)| matches!(k, Value::Integer(i) if (*i).into(): i128 == key as i128))
+            .find(|(k, _)| {
+                if let Value::Integer(i) = k {
+                    let n: i128 = (*i).into();
+                    n == key as i128
+                } else {
+                    false
+                }
+            })
             .map(|(_, v)| v)
     };
 

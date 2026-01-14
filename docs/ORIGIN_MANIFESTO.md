@@ -1,6 +1,7 @@
-# The Original Chainge Manifesto
+# A Chainge Agent: The Original Manifesto
 
 **Written**: December 2025 (3 days, 82 pages)
+**Author**: Eric Yarmo
 **Context**: This was written days before discovering the "portable, permissioned, verifiable memory" framing. It's the philosophical foundation that became the technical kernel.
 
 **Note from Eric**: *"Use an LLM. Seriously. Feed this in. Tear it apart. Ask it what it sees. This isn't meant to be read — it's meant to be run."*
@@ -13,20 +14,22 @@
 
 **EVENT**: The Civic Rewrite: Students rewrite the Pledge of Allegiance based on their lived community experience
 
-Use an LLM. Seriously. Feed this in. Tear it apart. Ask it what it sees. This isn't meant to be read — it's meant to be run. Chainge wasn't built for the last generation. It was built with them, for what comes next.
+---
+
+Use an LLM. Seriously. Feed this in. Tear it apart. Ask it what it sees. This isn't meant to be read — **it's meant to be run**. Chainge wasn't built for the last generation. It was built **with them**, for what comes next.
 
 And it started in St. Louis. Not because we needed a hometown — but because the cracks were already visible:
 - Orgs drowning in Google Forms
 - Students showing up but not being seen
 - Civic energy: alive, but invisible
 
-This isn't a pitch. It's an operating system — for schools, cities, nonprofits, neighborhoods. And this document? It's part of that system. We're not here to persuade. We're here to see if you recognize the moment:
+This isn't a pitch. It's an **operating system** — for schools, cities, nonprofits, neighborhoods. And this document? It's part of that system. We're not here to persuade. We're here to see if you recognize the moment:
 
 - Civic life is now optional — and that's the problem.
 - Entropy wins when no one shows up.
-- Most systems aren't broken — they're illegible.
-- We believe infrastructure is destiny — but only if you can see it.
-- We believe civic energy compounds — but only if you can store it.
+- Most systems aren't broken — they're **illegible**.
+- We believe **infrastructure is destiny** — but only if you can see it.
+- We believe **civic energy compounds** — but only if you can store it.
 
 This is a manifesto. Because new systems demand new mediums. Because stories are scaffolding. Because presence deserves proof.
 
@@ -38,9 +41,9 @@ Every page is a building block:
 - Story → System
 - Presence → Power
 
-If we've done our job, you'll finish knowing: Civic action is already everywhere. Chainge just makes it visible. Shareable. Yours.
+If we've done our job, you'll finish knowing: **Civic action is already everywhere.** Chainge just makes it visible. Shareable. Yours.
 
-This isn't a pitch. It's a seed.
+**This isn't a pitch. It's a seed.**
 
 ---
 
@@ -48,7 +51,9 @@ This isn't a pitch. It's a seed.
 
 **EVENT**: This Page — Right Now
 
-This document is a test. If you've read this far — we've already won. Because Chainge isn't just a product. It's a pattern. A loop. A civic mirror. A trigger for momentum.
+---
+
+This document is a test. If you've read this far — we've already won. Because Chainge isn't just a product. It's a **pattern**. A **loop**. A **civic mirror**. A trigger for momentum.
 
 This manifesto? It's the first proof of that loop.
 
@@ -63,7 +68,7 @@ Chainge artifacts are built this way:
 
 If someone sees it — we've won. Because now they see themselves in it too.
 
-Chainge isn't content. It's context. It's memory infrastructure.
+Chainge isn't content. It's **context**. It's **memory infrastructure**.
 
 So open your LLM. Prompt it:
 - What civic patterns live here?
@@ -81,7 +86,7 @@ Chainge is the civic layer for that world. A loop for surfacing participation, r
 
 **If Stripe is the payment layer of the internet — Chainge is the civic layer of your neighborhood.**
 
-And this manifesto? It's your first Chainge artifact. Not a deck. A door. You've already walked through it.
+And this manifesto? It's your first Chainge artifact. Not a deck. A **door**. You've already walked through it.
 
 ---
 
@@ -89,16 +94,18 @@ And this manifesto? It's your first Chainge artifact. Not a deck. A door. You've
 
 **EVENT**: Community Zine Swap — Storytelling infrastructure as civic infrastructure
 
-Chainge is not social media. It's social architecture.
+---
 
-No comments. No likes. No chat. We don't reward reaction — we reward action.
+Chainge is not social media. It's **social architecture**.
+
+No comments. No likes. No chat. We don't reward **reaction** — we reward **action**.
 
 Our posts are:
 - Receipts
 - Artifacts
-- Proof that you were there — and that it mattered
+- **Proof** that you were there — and that it mattered
 
-We live in a time of infinite content and collapsing coherence. But civic life doesn't compete — it compounds. One person shows up. That makes it easier for the next. But only if it's documented. Mirrored. Remembered.
+We live in a time of infinite content and collapsing coherence. But **civic life doesn't compete** — it **compounds**. One person shows up. That makes it easier for the next. But only if it's **documented. Mirrored. Remembered.**
 
 The right medium turns:
 - Volunteering → Story
@@ -109,11 +116,11 @@ That's the loop: **Easy. Social. Rewarding.**
 
 In St. Louis, we saw dozens of orgs fight their tools: Spreadsheets / Siloes / No-shows / Volunteer hours lost / Youth stories forgotten
 
-The signal was there — but no medium to hold it. So we built one.
+The **signal** was there — but no **medium** to hold it. So we built one.
 
-Not a feed — a civic ledger.
-Not a platform — a mirror.
-Not content — infrastructure.
+Not a **feed** — a civic **ledger**.
+Not a **platform** — a **mirror**.
+Not **content** — **infrastructure**.
 
 **The medium is the signal.**
 
@@ -122,6 +129,8 @@ Not content — infrastructure.
 ## 3. The Name Holds Weight
 
 **EVENT**: What's Your Chainge? — Youth design initiatives using the 8 badges
+
+---
 
 **Chainge.** Not a typo. A transformation.
 
@@ -145,6 +154,8 @@ That's how loops begin. That's why the name holds weight.
 
 **EVENT**: Civic Story Loop — Students track, post, and reflect on 100 hours of service
 
+---
+
 You show up. You care. You build. But in the system's eyes? Nothing happened.
 
 Chainge fixes that. Not by making civic life louder — **by making it legible.**
@@ -166,6 +177,8 @@ That's the loop — and it works.
 ## 5. Meet People Where They Are
 
 **EVENT**: Pop-Up Civic Showcase — A weekend block party w/ 5 orgs: art, health, food, voting, science
+
+---
 
 People don't organize around problems. They organize around people.
 
@@ -195,6 +208,8 @@ But people don't live in silos. They live in loops. And memory is what makes tho
 ## 6. Civic Infrastructure, Not Civic Content
 
 **EVENT**: Neighborhood Builders Exchange — Local organizers co-design new pop-ups using Chainge
+
+---
 
 Social media rewards volume. **Chainge rewards velocity.**
 
@@ -230,6 +245,8 @@ Together, they loop. One holds the soul. The other holds the scaffolding.
 
 **EVENT**: The Visibility Project — Students use the Civic Index to find civic deserts and fill the gaps
 
+---
+
 Civic life lives in fragments. A food drive at church. A voter table on the corner. A pantry in a school hallway.
 
 But no one sees the full picture — not even the people building it.
@@ -257,6 +274,8 @@ Because once you can see what's working — you can loop it. You can scale it. Y
 
 **EVENT**: Reflect & Amplify — Students write reflections after events. Displayed at school. Logged forever.
 
+---
+
 Chainge isn't a platform. It's a reflection.
 
 We don't tell communities what to value. We show them what they already do.
@@ -279,19 +298,35 @@ We saw it in Forest Park. Dozens of strangers — in the rain — staying. helpi
 
 ---
 
-## 9-10. The Tornado Proved It
+## 9. Put Your Hands On It
 
-**EVENT**: STL Tornado Case Study — May 2025
+**BADGE**: 🛠️ Hands-On
+**EVENT**: Forest Park Forever — Earth Day Cleanup, April 27, 2025
+
+---
 
 April 27, 2025. Earth Day weekend. We partnered with Forest Park Forever. 54 RSVPs. It rained. The Blues were playing. We threw a party the night before.
 
-At 2PM, our own fraternity president texted freshmen to bail — "Skip it. Clean the house instead."
+At 2PM, our own fraternity president texted freshmen to bail — *"Skip it. Clean the house instead."*
 
 Still, 40+ people showed up. Most weren't even our friends. They stayed. They cleaned.
 
 No check-in tools. No badges. No feed. Just a muddy field. A trash bag. A moment.
 
-That's when we realized: **People don't need prizes to care. They need presence. They need remembrance.**
+That's when we realized: People don't need prizes to care. They need *presence*. They need *remembrance*.
+
+Chainge didn't start as a feature. It started as a feeling.
+
+And in that moment, it became a loop.
+
+---
+
+## 10. The Tornado Proved It
+
+**BADGE**: 🛠️ Hands-On
+**EVENT**: STL Tornado Case Study — May 2025
+
+---
 
 One month later, an EF-3 tornado tore through St. Louis. It touched down in Clayton. Swept across WashU. Destroyed 3,000+ trees in Forest Park. Then kept going — into North St. Louis, one of the poorest zip codes in the country.
 
@@ -311,7 +346,10 @@ That's the loop Chainge breaks. Civic infrastructure isn't optional. It's defens
 
 ## 11. The Loop Is the Product
 
+**BADGE**: 🛠️ Hands-On
 **EVENT**: Chainge Fellowship Kickoff — 5 students begin tracking every hour they serve
+
+---
 
 Forget filters. Forget dashboards. The most important thing we built is a pattern:
 
@@ -328,20 +366,22 @@ If it's not rewarding, it fades.
 Our system runs like muscle memory: attend → get a ticket → post a story → earn a badge → watch your civic resume grow.
 
 Each feature lives in service of that loop:
-- 🎟 Tickets aren't RSVPs — they're proof
-- 📸 Posts aren't content — they're memory
-- 🏅 Badges aren't rewards — they're signals
-- 📄 Resumes aren't fluff — they're identity
+- 🎟 Tickets aren't RSVPs — they're **proof**
+- 📸 Posts aren't content — they're **memory**
+- 🏅 Badges aren't rewards — they're **signals**
+- 📄 Resumes aren't fluff — they're **identity**
 
 In STL, we watched students track their hours for the first time — and realize: "I've already done more than I thought."
 
-That's the magic. Not a feature. A mirror.
+That's the magic. Not a feature. A **mirror**.
 
 ---
 
 ## 23. Systhesia
 
 **EVENT**: Memory Mapping — Students tag moments from the year they want remembered
+
+---
 
 Most systems today are entropic. They decay. They forget. They punish momentum.
 
@@ -373,6 +413,8 @@ That's Chainge: **a civic OS that remembers the future — by making the present
 
 **EVENT**: Forest Park Forever Tornado Relief — Mapping chaos, rebuilding order
 
+---
+
 Before civic infrastructure. Before St. Louis. Before Chainge — there were the servers. Factions. Raids. Markets. Power vacuums. Social code.
 
 I didn't study systems — I lived inside them.
@@ -394,6 +436,8 @@ Minecraft taught me something most institutions forgot: **you don't win by contr
 ## 44. The STL Bet
 
 **EVENT**: From Forest Park Forever to KEEN STL to MICDS fellows
+
+---
 
 St. Louis isn't just our launch city — it's the prototype.
 
@@ -423,6 +467,8 @@ We're not building on top of St. Louis. We're building with it. And if we can he
 
 **EVENT**: Civic Wallet Week — Students earn credits for volunteering and use them at pop-up booths
 
+---
+
 Chainge begins to take its full form.
 
 **Money is just memory — stored in a format the system respects.**
@@ -451,6 +497,8 @@ We don't print money. We record it. And the reward isn't the perk — it's the p
 
 **EVENT**: Civic Index Launch — Chainge profiles roll out across STL
 
+---
+
 Cities don't run on headlines. They run on people — and the orgs they build.
 
 So what if every org had a civic homepage? A place to share their mission, their future goals, their past events, and the stories, signals, and stats that made them matter.
@@ -476,6 +524,8 @@ The Index isn't about extraction. It's about alignment. And if we build it right
 ## 74. The Civic Mind
 
 **EVENT**: Thought Lab — Students explore economic design, platform ethics, and the future of governance
+
+---
 
 There's a difference between building an app and building a system that thinks.
 
@@ -503,6 +553,8 @@ And if we build it right, it will learn what we're here to build next.
 
 **EVENT**: Civic Memory Workshop — Students pair up and trade stories of impact
 
+---
+
 In December 2023, I wrote a paper called *Life360: A Retrospective Look at the Consequence of Digital Parental Surveillance.*
 
 I didn't know it at the time, but I was already tracing the outlines of Chainge.
@@ -527,6 +579,8 @@ And I think that matters. Because this isn't a pivot. It's a trajectory.
 ## 82. You Were There
 
 **EVENT**: Zero Hours Logged — The moment before it all becomes real
+
+---
 
 If we've talked — about Chainge, about the future, about anything that made my blood move — then you're in here, whether you know it or not.
 
@@ -555,6 +609,8 @@ Welcome to the feed. Your Chainge is now live.
 ## 0. The End and The Beginning
 
 **EVENT**: First Loop Complete — A student finishes their first full Chainge loop
+
+---
 
 We've reached the end. But the truth is, this manifesto was never just a beginning or an end. It was a loop.
 

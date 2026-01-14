@@ -566,18 +566,18 @@ impl Store for SqliteStore {
                 let mut stmt = conn.prepare(
                     "SELECT stream_id FROM streams WHERE author = ?1",
                 )?;
-                stmt.query_map(params![author.0.as_slice()], |row| {
+                let rows = stmt.query_map(params![author.0.as_slice()], |row| {
                     let bytes: Vec<u8> = row.get(0)?;
                     Ok(StreamId::from_bytes(bytes.try_into().unwrap_or([0u8; 32])))
-                })?
-                .collect::<rusqlite::Result<Vec<_>>>()?
+                })?;
+                rows.collect::<rusqlite::Result<Vec<_>>>()?
             } else {
                 let mut stmt = conn.prepare("SELECT stream_id FROM streams")?;
-                stmt.query_map([], |row| {
+                let rows = stmt.query_map([], |row| {
                     let bytes: Vec<u8> = row.get(0)?;
                     Ok(StreamId::from_bytes(bytes.try_into().unwrap_or([0u8; 32])))
-                })?
-                .collect::<rusqlite::Result<Vec<_>>>()?
+                })?;
+                rows.collect::<rusqlite::Result<Vec<_>>>()?
             };
 
             Ok(streams)

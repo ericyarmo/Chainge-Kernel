@@ -11,6 +11,7 @@ rust-version.workspace = true
 # Cryptography
 blake3.workspace = true
 ed25519-dalek.workspace = true
+rand.workspace = true
 
 # Serialization
 ciborium.workspace = true
@@ -20,10 +21,9 @@ serde.workspace = true
 thiserror.workspace = true
 
 # Utilities
-bytes.workspace = true
+bytes = { workspace = true, features = ["serde"] }
 hex.workspace = true
 
 [dev-dependencies]
 proptest.workspace = true
 serde_json.workspace = true
-rand.workspace = true

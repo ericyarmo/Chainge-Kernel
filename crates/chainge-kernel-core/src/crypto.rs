@@ -119,8 +119,62 @@ impl From<[u8; 32]> for Ed25519PublicKey {
 }
 
 /// A 64-byte Ed25519 signature.
-#[derive(Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Clone, Copy, PartialEq, Eq)]
 pub struct Ed25519Signature(pub [u8; 64]);
+
+// Custom serde for [u8; 64] since serde doesn't support arrays > 32 by default
+impl serde::Serialize for Ed25519Signature {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        serializer.serialize_bytes(&self.0)
+    }
+}
+
+impl<'de> serde::Deserialize<'de> for Ed25519Signature {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        struct Visitor;
+
+        impl<'de> serde::de::Visitor<'de> for Visitor {
+            type Value = Ed25519Signature;
+
+            fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
+                formatter.write_str("64 bytes")
+            }
+
+            fn visit_bytes<E>(self, v: &[u8]) -> Result<Self::Value, E>
+            where
+                E: serde::de::Error,
+            {
+                if v.len() != 64 {
+                    return Err(E::invalid_length(v.len(), &"64 bytes"));
+                }
+                let mut arr = [0u8; 64];
+                arr.copy_from_slice(v);
+                Ok(Ed25519Signature(arr))
+            }
+
+            fn visit_seq<A>(self, mut seq: A) -> Result<Self::Value, A::Error>
+            where
+                A: serde::de::SeqAccess<'de>,
+            {
+                let mut arr = [0u8; 64];
+                for i in 0..64 {
+                    arr[i] = seq
+                        .next_element()?
+                        .ok_or_else(|| serde::de::Error::invalid_length(i, &"64 bytes"))?;
+                }
+                Ok(Ed25519Signature(arr))
+            }
+        }
+
+        deserializer.deserialize_bytes(Visitor)
+    }
+}
 
 impl Ed25519Signature {
     /// Create from raw bytes.

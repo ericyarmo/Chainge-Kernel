@@ -194,6 +194,8 @@ impl StreamState {
         if seq == self.head_seq + 1 {
             self.head_seq = seq;
             self.head_receipt_id = Some(receipt_id);
+            // Remove from gaps in case this seq was previously marked as a gap
+            self.gaps.remove(&seq);
 
             // Check if we can advance further with previously received receipts
             // (This would need to check storage - handled by caller)
@@ -203,9 +205,15 @@ impl StreamState {
             return RecordResult::Accepted;
         }
 
-        // Case 2: Creates a gap
+        // Case 2: Fills a known gap
+        if self.gaps.remove(&seq) {
+            self.update_health();
+            return RecordResult::GapFilled;
+        }
+
+        // Case 3: Creates a gap (seq beyond head and not filling known gap)
         if seq > self.head_seq + 1 {
-            // Add all missing seqs to gaps
+            // Add all missing seqs between head and this new seq to gaps
             for missing in (self.head_seq + 1)..seq {
                 self.gaps.insert(missing);
             }
@@ -213,15 +221,7 @@ impl StreamState {
             return RecordResult::AcceptedWithGaps;
         }
 
-        // Case 3: seq <= head_seq - this could be:
-        // - Filling a gap
-        // - Duplicate
-        // - Conflict (handled by caller who checks receipt_id)
-        if self.gaps.remove(&seq) {
-            self.update_health();
-            return RecordResult::GapFilled;
-        }
-
+        // Case 4: seq <= head_seq and not in gaps - duplicate
         RecordResult::Duplicate
     }
 

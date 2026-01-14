@@ -19,12 +19,14 @@ async-trait.workspace = true
 
 # Serialization
 serde.workspace = true
+ciborium.workspace = true
 
 # Error handling
 thiserror.workspace = true
 
 # Utilities
 tracing.workspace = true
+bytes.workspace = true
 
 [dev-dependencies]
 tempfile.workspace = true
