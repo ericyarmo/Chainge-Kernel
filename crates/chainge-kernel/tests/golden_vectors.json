@@ -1,0 +1,5 @@
+{
+  "version": "0.4.0",
+  "description": "Golden test vectors for Chainge Kernel. Every implementation must produce identical outputs.",
+  "vectors": []
+}

@@ -1,13 +1,6 @@
 [workspace]
 resolver = "2"
-members = [
-    "crates/chainge-kernel-core",
-    "crates/chainge-kernel-store",
-    "crates/chainge-kernel-sync",
-    "crates/chainge-kernel-perms",
-    "crates/chainge-kernel",
-    "crates/chainge-kernel-testkit",
-]
+members = ["crates/chainge-kernel"]
 
 [workspace.package]
 version = "0.1.0"
@@ -17,19 +10,9 @@ repository = "https://github.com/chainge/kernel"
 rust-version = "1.75"
 
 [workspace.dependencies]
-# Internal crates
-chainge-kernel-core = { path = "crates/chainge-kernel-core" }
-chainge-kernel-store = { path = "crates/chainge-kernel-store" }
-chainge-kernel-sync = { path = "crates/chainge-kernel-sync" }
-chainge-kernel-perms = { path = "crates/chainge-kernel-perms" }
-chainge-kernel = { path = "crates/chainge-kernel" }
-chainge-kernel-testkit = { path = "crates/chainge-kernel-testkit" }
-
 # Cryptography
-blake3 = "1.5"
-ed25519-dalek = { version = "2.1", features = ["rand_core", "serde"] }
-x25519-dalek = { version = "2.0", features = ["serde", "static_secrets"] }
-chacha20poly1305 = "0.10"
+sha2 = "0.10"
+ed25519-dalek = { version = "2.1", features = ["rand_core"] }
 rand = "0.8"
 
 # Serialization
@@ -37,34 +20,16 @@ ciborium = "0.2"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
 
-# Storage
-rusqlite = { version = "0.31", features = ["bundled"] }
-
-# Async
-tokio = { version = "1.35", features = ["rt-multi-thread", "macros", "sync", "time"] }
-async-trait = "0.1"
-
 # Error handling
 thiserror = "1.0"
-anyhow = "1.0"
 
 # Utilities
 bytes = "1.5"
 hex = "0.4"
-tracing = "0.1"
-tracing-subscriber = "0.3"
 
 # Testing
 proptest = "1.4"
-criterion = "0.5"
-tempfile = "3.10"
 
 [profile.release]
 lto = true
 codegen-units = 1
-
-[profile.dev]
-opt-level = 0
-
-[profile.test]
-opt-level = 2

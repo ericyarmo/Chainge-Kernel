@@ -1,6 +1,6 @@
 [package]
 name = "chainge-kernel"
-description = "Unified Chainge Kernel API: verifiable memory with receipts, streams, and permissions"
+description = "Minimal cryptographic kernel for verifiable receipts"
 version.workspace = true
 edition.workspace = true
 license.workspace = true
@@ -8,23 +8,15 @@ repository.workspace = true
 rust-version.workspace = true
 
 [dependencies]
-chainge-kernel-core.workspace = true
-chainge-kernel-store.workspace = true
-chainge-kernel-sync.workspace = true
-chainge-kernel-perms.workspace = true
-
-# Async
-tokio.workspace = true
-async-trait.workspace = true
-
-# Error handling
+sha2.workspace = true
+ed25519-dalek.workspace = true
+rand.workspace = true
+ciborium.workspace = true
 thiserror.workspace = true
-anyhow.workspace = true
-
-# Utilities
-tracing.workspace = true
+bytes.workspace = true
+hex.workspace = true
 
 [dev-dependencies]
-tempfile.workspace = true
 proptest.workspace = true
-tracing-subscriber.workspace = true
+serde.workspace = true
+serde_json.workspace = true
