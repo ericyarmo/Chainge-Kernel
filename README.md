@@ -1,109 +1,126 @@
 # Chainge Kernel
 
-**Portable. Permissioned. Verifiable. Memory you own.**
+**The atom of verifiable memory.**
 
-The Chainge Kernel is infrastructure for memory that belongs to people, not platforms.
+A receipt is a signed claim that something happened. The kernel stores and verifies receipts. Everything else emerges.
 
 ---
 
-## The Problem
-
-Your memory is trapped. Betting history in DraftKings. Health records scattered across hospitals. Reputation locked in platforms that can delete you. The cost of interoperability isn't high - it's infinite, because platforms don't want it to exist.
-
-## The Solution
-
-**Receipts** - cryptographically signed claims that something happened.
+## The Receipt
 
 ```
-Receipt = {
-  cid: content_address,      // What
-  did: identity,             // Who
-  signature: ed25519(cbor),  // Proof
-  timestamp: when,           // When
+Receipt {
+    author:    [u8; 32]      // Ed25519 public key
+    schema:    String        // URI identifying payload type
+    refs:      Vec<[u8; 32]> // Links to other receipts (causal ordering)
+    payload:   Bytes         // Opaque content (≤64KB)
+    signature: [u8; 64]      // Ed25519 signature
 }
 ```
 
-Receipts are:
-- **Portable** - They move with you
-- **Permissioned** - You control who sees what
-- **Verifiable** - Cryptographically signed, auditable
-- **Composable** - Combine into larger truths
+Four semantic fields plus a signature. That's the atom.
 
-## Status
+---
 
-**Far from complete. Absolutely proven.**
+## Properties
 
-This kernel has been implemented 8 different ways across 5 languages in 5 months:
+| Property | What it means |
+|----------|---------------|
+| **Signed** | Cryptographically proves who created it |
+| **Immutable** | Can never be changed after creation |
+| **Content-addressed** | ID is derived from content, not assigned |
+| **Linkable** | refs create DAGs—chains, merges, witnesses |
+| **Offline-first** | Sign and verify without network |
+| **Portable** | Works anywhere, verified by anyone |
 
-| Project | Domain | Innovation |
-|---------|--------|------------|
-| [TheMove](docs/projects/PROJECT_THEMOVE.md) | Anonymous social | Attribution without identity |
-| [Buds](docs/projects/PROJECT_BUDS.md) | Private memory | E2EE + relay sync |
-| [Streams](docs/projects/PROJECT_STREAMS.md) | Betting reputation | Public signed receipts |
-| [ChaingeNode](docs/projects/PROJECT_CHAINGE_NODE.md) | Civic participation | 53ms NFC receipts |
-| [Frontier Index](docs/projects/PROJECT_FRONTIER_INDEX.md) | AI knowledge | Deterministic reasoning |
-| [Replay Kernel](docs/projects/PROJECT_REPLAY_KERNEL.md) | Gaming | Teachable in 1 week |
+---
 
-Read the full story: **[docs/MANIFESTO.md](docs/MANIFESTO.md)**
+## Philosophy
 
-## Architecture
+The kernel is **common law for memory**.
 
-```
-┌─────────────────────────────────────────┐
-│            Applications                 │
-├─────────────────────────────────────────┤
-│            Receipt Layer                │
-│   Sign → Hash → Store → Sync → Verify   │
-├─────────────────────────────────────────┤
-│            Identity Layer               │
-│        DIDs, keys, devices              │
-├─────────────────────────────────────────┤
-│          Cryptographic Layer            │
-│   Ed25519, X25519, AES-GCM, CBOR, CID   │
-└─────────────────────────────────────────┘
-```
+| Layer | Analogy | What it is |
+|-------|---------|------------|
+| Kernel | Natural law | Axioms that can't be violated |
+| Conventions | Common law | Patterns emerging from practice |
+| Applications | Jurisdictions | Rules for interpretation |
+
+The kernel doesn't say what's true. It says what was attested. Trust is computed by observers, not declared by the system.
+
+See [ChaingeOS/08_PHILOSOPHY.md](../ChaingeOS/08_PHILOSOPHY.md) for the full frame.
+
+---
 
 ## This Implementation (Rust)
 
 ```
-crates/
-├── chainge-kernel-core   # Receipt, CID, signatures
-├── chainge-kernel-store  # SQLite persistence
-├── chainge-kernel-sync   # Relay protocol
-├── chainge-kernel-perms  # Capabilities, encryption
-└── chainge-kernel        # Unified API
+crates/chainge-kernel/
+├── src/
+│   ├── lib.rs        # Public API
+│   ├── receipt.rs    # Receipt struct, create/verify
+│   ├── canonical.rs  # DAG-CBOR encoding
+│   ├── crypto.rs     # Ed25519, SHA-256
+│   ├── store.rs      # Store trait + MemoryStore
+│   └── error.rs      # Error types
+└── tests/
+    └── golden.rs     # Golden test vectors
 ```
 
 ```bash
 cargo build
-cargo test
+cargo test   # 43 tests pass
 ```
+
+---
+
+## Golden Test Vectors
+
+`tests/golden_vectors.json` contains 10 test vectors. Any implementation that produces identical outputs is kernel-compatible.
+
+| Vector | Tests |
+|--------|-------|
+| empty_refs_empty_payload | Minimal case |
+| empty_refs_with_payload | Payload encoding |
+| single_ref | Reference encoding |
+| two_refs_sorted | Refs normalization |
+| many_refs | 8 refs |
+| max_schema_length | 256-byte schema boundary |
+| large_payload | 1KB payload |
+| binary_payload | All 256 byte values |
+| realistic_civic | Real JSON payload |
+| chain_receipt | B references A |
+
+---
 
 ## Documentation
 
-- [Manifesto](docs/MANIFESTO.md) - The full story (start here)
-- [Spec v0](SPEC_V0.md) - Technical specification
-- [Analysis Framework](docs/ANALYSIS_FRAMEWORK.md) - How projects are documented
-- [Project Docs](docs/projects/) - Individual project deep-dives
+| Document | Purpose |
+|----------|---------|
+| [SPEC.md](SPEC.md) | Kernel specification (v0.5.1) |
+| [CONVENTIONS.md](CONVENTIONS.md) | Blessed patterns: chains, tombstones, heads |
+| [docs/DAG_SEMANTICS.md](docs/DAG_SEMANTICS.md) | How refs create causal structure |
+| [docs/MANIFESTO.md](docs/MANIFESTO.md) | Origin story |
 
-## A Note on How This Was Built
+---
 
-Every line of code across all implementations was written via LLM pair programming. First code ever: August 2025. Total elapsed: 5 months. This is proof that:
+## Prior Art
 
-1. The concepts are language-agnostic
-2. LLMs compress learning
-3. The patterns compound
-4. Serious infrastructure can be built this way
+This kernel has been implemented across multiple projects:
+
+| Project | Domain | What it proved |
+|---------|--------|----------------|
+| TheMove | Anonymous social | Attribution without identity |
+| Buds | Private memory | E2EE + relay sync |
+| Streams | Betting reputation | Public signed receipts |
+| ChaingeNode | Civic participation | 53ms NFC receipts |
+| Frontier Index | AI knowledge | Deterministic reasoning |
+
+---
 
 ## License
 
 MIT OR Apache-2.0
 
-## Contact
-
-Eric Yarmolinsky
-January 2026
-
 ---
 
-*"Make a Chainge. Remember the Future."* - Eric Yarmo
+*"A receipt is a signed claim that something happened. That's the atomic unit. Everything else emerges."*
