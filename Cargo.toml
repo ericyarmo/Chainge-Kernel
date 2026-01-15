@@ -24,11 +24,7 @@ serde_json = "1.0"
 thiserror = "1.0"
 
 # Utilities
-bytes = "1.5"
 hex = "0.4"
-
-# Testing
-proptest = "1.4"
 
 [profile.release]
 lto = true
