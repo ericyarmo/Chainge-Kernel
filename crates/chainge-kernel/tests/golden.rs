@@ -285,7 +285,7 @@ fn print_golden_vectors_json() {
     }
 
     let file = VectorFile {
-        version: "0.4.0".to_string(),
+        version: "0.5.1".to_string(),
         description: "Golden test vectors for Chainge Kernel. Every implementation must produce identical outputs.".to_string(),
         domain_sign: String::from_utf8_lossy(SIGN_DOMAIN).to_string(),
         domain_id: String::from_utf8_lossy(ID_DOMAIN).to_string(),

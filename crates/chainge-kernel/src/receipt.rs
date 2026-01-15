@@ -192,11 +192,13 @@ impl Receipt {
         ReceiptId(Sha256Hash::hash(&to_hash).0)
     }
 
-    /// Compute the CIDv1 (content identifier, IPFS-compatible).
+    /// Compute the CIDv1 for IPFS interoperability.
     ///
     /// `cid = CIDv1(dag-cbor, sha2-256(receipt_bytes))`
     ///
-    /// Note: CID hashes receipt_bytes directly (no domain prefix) for IPFS compatibility.
+    /// **Note**: This is a derived value for external systems. Use [`id()`](Self::id)
+    /// for internal references (including `refs`). CID uses raw hash (no domain
+    /// separation) per IPFS spec; `receipt_id` includes domain separation.
     pub fn cid(&self) -> String {
         let receipt_bytes = canonical_receipt(
             &self.author,

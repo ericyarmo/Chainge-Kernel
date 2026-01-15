@@ -1,6 +1,6 @@
 # Chainge Kernel Specification
 
-**Version**: 0.5.0
+**Version**: 0.5.1
 **Date**: 2026-01-15
 
 The kernel is the minimal cryptographic primitive for verifiable memory. It does ONE thing: store and verify signed receipts.
@@ -128,34 +128,7 @@ Domain prefix `"chainge/receipt-id/v1"` is exactly 21 bytes.
 
 ---
 
-## 5. CID (Content Identifier)
-
-For IPFS/dag-cbor interoperability, receipts have a CIDv1.
-
-### Construction
-
-```
-digest     = sha256(receipt_bytes)
-multihash  = 0x12 || 0x20 || digest      // sha2-256, 32 bytes
-cid_bytes  = 0x01 || 0x71 || multihash   // CIDv1, dag-cbor codec
-cid        = "b" + base32lower(cid_bytes) // multibase prefix
-```
-
-### Byte-by-byte
-
-| Field | Value | Meaning |
-|-------|-------|---------|
-| `0x01` | CID version | CIDv1 |
-| `0x71` | Codec | dag-cbor |
-| `0x12` | Hash function | sha2-256 |
-| `0x20` | Hash length | 32 bytes |
-| `digest` | 32 bytes | SHA-256 of receipt_bytes |
-
-**Note**: CID hashes `receipt_bytes` directly (no domain prefix) for IPFS verifiability. The `receipt_id` includes domain separation; the CID does not.
-
----
-
-## 6. Receipt Validity
+## 5. Receipt Validity
 
 A receipt is valid if and only if ALL conditions hold:
 
@@ -175,7 +148,7 @@ A receipt is valid if and only if ALL conditions hold:
 
 ---
 
-## 7. Core Invariants
+## 6. Core Invariants
 
 These are the ONLY guarantees the kernel provides:
 
@@ -199,9 +172,9 @@ Inserting the same receipt twice is a no-op.
 
 ### Invariant 4: Causal Ordering via Refs
 ```
-If B.refs contains A.receipt_id, then A happened-before B.
+If B.refs contains A.receipt_id, then B had knowledge of A at creation time.
 ```
-This is the ONLY ordering primitive. No timestamps. No sequences.
+This establishes A is *causally prior* to B (Lamport's happened-before). This is the ONLY ordering primitive. No timestamps. No sequences.
 
 ### Invariant 5: Convergent Sync
 ```
@@ -212,7 +185,7 @@ Selective sharing (filtering by schema, author, etc.) is application policy.
 
 ---
 
-## 8. Trust Physics
+## 7. Trust Physics
 
 **Attestation is not verification.**
 
@@ -247,7 +220,7 @@ The kernel provides attestation infrastructure. Applications build trust by:
 
 ---
 
-## 9. What the Kernel Does NOT Do
+## 8. What the Kernel Does NOT Do
 
 | Concern | Where It Lives | Why Not Kernel |
 |---------|----------------|----------------|
@@ -265,7 +238,7 @@ See **CONVENTIONS.md** for blessed patterns.
 
 ---
 
-## 10. Refs: The Primitive for Relationships
+## 9. Refs: The Primitive for Relationships
 
 Refs are how receipts relate to each other. The kernel stores them; applications interpret them.
 
@@ -284,24 +257,22 @@ Refs are how receipts relate to each other. The kernel stores them; applications
 
 ---
 
-## 11. Cryptographic Choices
+## 10. Cryptographic Choices
 
 | Purpose | Algorithm | Why |
 |---------|-----------|-----|
-| Hashing | SHA-256 | Universal: hardware acceleration, IPFS/CID compat |
+| Hashing | SHA-256 | Universal: hardware acceleration, every language has it |
 | Signing | Ed25519 (RFC 8032) | Small signatures, fast verify, deterministic |
-| Encoding | DAG-CBOR | IPLD-compatible deterministic CBOR |
-| CID | CIDv1 + dag-cbor | IPFS ecosystem interoperability |
+| Encoding | DAG-CBOR | Deterministic CBOR (RFC 8949) |
 
 **Why SHA-256 over Blake3?**
 - Hardware acceleration everywhere (Intel SHA-NI, ARM SHA)
-- CIDv1/IPFS ecosystem uses SHA-256
 - Every language has SHA-256
 - Cost of interoperability → $0 with ubiquitous primitives
 
 ---
 
-## 12. Limits
+## 11. Limits
 
 | Field | Limit | Rationale |
 |-------|-------|-----------|
@@ -311,7 +282,7 @@ Refs are how receipts relate to each other. The kernel stores them; applications
 
 ---
 
-## 13. Store Interface
+## 12. Store Interface
 
 The kernel's only storage interface:
 
@@ -334,7 +305,7 @@ enum InsertResult {
 
 ---
 
-## 14. Privacy Model
+## 13. Privacy Model
 
 The kernel is agnostic to privacy. Payloads are opaque bytes.
 
@@ -350,20 +321,20 @@ Privacy is application layer. The kernel just stores signed bytes.
 
 ---
 
-## 15. Design Principles
+## 14. Design Principles
 
 1. **Minimal**: 4 fields + signature. Everything else is conventions or applications.
 2. **Immutable**: Receipts never change. New receipts reference old ones.
 3. **Content-addressed**: Identity is derived from content, not assigned.
 4. **Offline-first**: Create and verify receipts without network.
 5. **Trust-transparent**: Signatures reveal who attested. Trust is computed.
-6. **Interoperable**: SHA-256, DAG-CBOR, CIDv1 = universal primitives.
+6. **Interoperable**: SHA-256, Ed25519, DAG-CBOR = universal primitives.
 7. **Append-only**: Memory is cheap. Keep everything.
 8. **Deterministic**: Kernel normalizes input (refs order) for consistent signatures.
 
 ---
 
-## 16. Ecosystem
+## 15. Ecosystem
 
 | Document | Purpose |
 |----------|---------|
@@ -371,6 +342,44 @@ Privacy is application layer. The kernel just stores signed bytes.
 | **CONVENTIONS.md** | Blessed patterns: tombstone, head, delegate, chain |
 | **SYNC.md** | Sync protocol specification (future) |
 | **SCHEMAS.md** | Schema registry conventions (future) |
+
+---
+
+## Appendix A: IPFS Interoperability (CID)
+
+For systems that need to store or retrieve receipts via IPFS, a CIDv1 can be derived from any receipt.
+
+**Important**: CID is a *derived value* for external interoperability, not the canonical identity. Use `receipt_id` for all internal references (including `refs`).
+
+### CID Construction
+
+```
+digest     = sha256(receipt_bytes)           // no domain separation
+multihash  = 0x12 || 0x20 || digest          // sha2-256, 32 bytes
+cid_bytes  = 0x01 || 0x71 || multihash       // CIDv1, dag-cbor codec
+cid        = "b" + base32lower(cid_bytes)    // multibase prefix
+```
+
+### Byte-by-byte
+
+| Field | Value | Meaning |
+|-------|-------|---------|
+| `0x01` | CID version | CIDv1 |
+| `0x71` | Codec | dag-cbor |
+| `0x12` | Hash function | sha2-256 |
+| `0x20` | Hash length | 32 bytes |
+| `digest` | 32 bytes | SHA-256 of receipt_bytes |
+
+### Why CID Differs from Receipt ID
+
+| Property | receipt_id | CID |
+|----------|------------|-----|
+| Domain separation | Yes (`chainge/receipt-id/v1`) | No (IPFS requires raw hash) |
+| Used in refs | Yes | No |
+| Format | 32 bytes raw | Variable, base32-encoded |
+| Purpose | Internal identity | External retrieval |
+
+**Use `receipt_id` for Chainge operations. Use CID only when crossing into IPFS.**
 
 ---
 
