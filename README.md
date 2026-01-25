@@ -26,7 +26,7 @@ Properties:
 
 ```toml
 [dependencies]
-chainge-kernel = { git = "https://github.com/ericyarmo/Kernel" }
+chainge-kernel = { git = "https://github.com/ericyarmo/Chainge-Kernel" }
 ```
 
 ## Usage
