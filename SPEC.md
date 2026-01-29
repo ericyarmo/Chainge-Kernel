@@ -234,7 +234,7 @@ The kernel provides attestation infrastructure. Applications build trust by:
 | Entity resolution | Application | Names are messy |
 | Encryption | Payload | Kernel stores opaque bytes |
 
-See **CONVENTIONS.md** for blessed patterns.
+Blessed patterns (tombstone, head, delegate, chain) will be documented in a future CONVENTIONS.md.
 
 ---
 
@@ -249,7 +249,7 @@ Refs are how receipts relate to each other. The kernel stores them; applications
 - Always present in CBOR (empty array `[]` if none)
 - Maximum 128 entries
 
-**Relationship patterns (see CONVENTIONS.md):**
+**Relationship patterns:**
 - Chain: B.refs = [A] means B follows A
 - Countersign: B.refs = [A] means B witnesses A
 - Merge: C.refs = [A, B] means C combines A and B
@@ -339,9 +339,9 @@ Privacy is application layer. The kernel just stores signed bytes.
 | Document | Purpose |
 |----------|---------|
 | **SPEC.md** (this) | Kernel specification (frozen) |
-| **CONVENTIONS.md** | Blessed patterns: tombstone, head, delegate, chain |
-| **SYNC.md** | Sync protocol specification (future) |
-| **SCHEMAS.md** | Schema registry conventions (future) |
+| **CONVENTIONS.md** (planned) | Blessed patterns: tombstone, head, delegate, chain |
+| **SYNC.md** (planned) | Sync protocol specification |
+| **SCHEMAS.md** (planned) | Schema registry conventions |
 
 ---
 
@@ -385,4 +385,4 @@ cid        = "b" + base32lower(cid_bytes)    // multibase prefix
 
 *This spec is the constitution. All implementations must honor these invariants.*
 
-*For higher-level patterns, see CONVENTIONS.md.*
+*Higher-level patterns (conventions, sync, schemas) will be documented separately.*

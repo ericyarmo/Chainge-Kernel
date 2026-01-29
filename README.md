@@ -38,7 +38,7 @@ use chainge_kernel::{Keypair, Receipt};
 let keypair = Keypair::generate();
 
 // Create receipt
-let receipt = Receipt::create(
+let receipt = Receipt::new(
     &keypair,
     "example/v1",
     vec![],  // refs

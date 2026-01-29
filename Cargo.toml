@@ -6,7 +6,7 @@ members = ["crates/chainge-kernel"]
 version = "0.1.0"
 edition = "2021"
 license = "MIT OR Apache-2.0"
-repository = "https://github.com/chainge/kernel"
+repository = "https://github.com/ericyarmo/Chainge-Kernel"
 rust-version = "1.75"
 
 [workspace.dependencies]
